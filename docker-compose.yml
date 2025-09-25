@@ -1,0 +1,57 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: odonata_overture_postgres
+    env_file:
+      - docker.env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-odonata_overture_development}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_MULTIPLE_DATABASES: ${POSTGRES_MULTIPLE_DATABASES:-odonata_overture_development,odonata_overture_test,odonata_overture_production}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init-multiple-databases.sh:/docker-entrypoint-initdb.d/init-multiple-databases.sh
+    networks:
+      - odonata_network
+
+  # Rails Application
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: odonata_overture_web
+    ports:
+      - "3000:3000"
+    env_file:
+      - docker.env
+    environment:
+      - RAILS_ENV=development
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      - postgres
+    networks:
+      - odonata_network
+    command: >
+      sh -c "
+        bundle install &&
+        mkdir -p log tmp &&
+        chmod -R 777 log tmp &&
+        bundle exec rails db:create db:migrate &&
+        bundle exec rails server -b 0.0.0.0 -p 3000
+      "
+
+volumes:
+  postgres_data:
+  bundle_cache:
+
+networks:
+  odonata_network:
+    driver: bridge

@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Docker development helper script
+
+case "$1" in
+  "up")
+    echo "Starting development environment..."
+    docker-compose --env-file docker.env up --build
+    ;;
+  "down")
+    echo "Stopping development environment..."
+    docker-compose down
+    ;;
+  "logs")
+    echo "Showing logs..."
+    docker-compose logs -f web
+    ;;
+  "console")
+    echo "Opening Rails console..."
+    docker-compose exec web bundle exec rails console
+    ;;
+  "db:create")
+    echo "Creating databases..."
+    docker-compose exec web bundle exec rails db:create
+    ;;
+  "db:migrate")
+    echo "Running migrations..."
+    docker-compose exec web bundle exec rails db:migrate
+    ;;
+  "db:seed")
+    echo "Seeding database..."
+    docker-compose exec web bundle exec rails db:seed
+    ;;
+  "bundle")
+    echo "Installing gems..."
+    docker-compose exec web bundle install
+    ;;
+  "clean")
+    echo "Cleaning up containers and volumes..."
+    docker-compose down -v
+    docker system prune -f
+    ;;
+  *)
+    echo "Usage: $0 {up|down|logs|console|db:create|db:migrate|db:seed|bundle|clean}"
+    echo ""
+    echo "Commands:"
+    echo "  up        - Start the development environment"
+    echo "  down      - Stop the development environment"
+    echo "  logs      - Show application logs"
+    echo "  console   - Open Rails console"
+    echo "  db:create - Create databases"
+    echo "  db:migrate- Run database migrations"
+    echo "  db:seed   - Seed the database"
+    echo "  bundle    - Install gems"
+    echo "  clean     - Clean up containers and volumes"
+    exit 1
+    ;;
+esac
