@@ -21,7 +21,7 @@ jobs:
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: |
-          chmod 0600 bin/brakeman
+          chmod +x bin/brakeman
           bin/brakeman --no-pager
 
   scan_js:
@@ -39,7 +39,7 @@ jobs:
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: |
-          chmod 0600 bin/importmap
+          chmod +x bin/importmap
           bin/importmap audit
 
   lint:
@@ -56,7 +56,7 @@ jobs:
 
       - name: Lint code for consistent style
         run: |
-          chmod 0600 bin/rubocop
+          chmod +x bin/rubocop
           bin/rubocop -f github
 
   test:
@@ -86,7 +86,7 @@ jobs:
           RAILS_ENV: test
           # REDIS_URL: redis://localhost:6379/0
         run: |
-          chmod 0600 bin/rails
+          chmod +x bin/rails
           bin/rails db:test:prepare test test:system
 
       - name: Keep screenshots from failed system tests
