@@ -34,8 +34,10 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
       - name: Clear Bundler cache
         run: bundle clean --force
+        
       - name: Install dependencies
         run: bundle install
 
