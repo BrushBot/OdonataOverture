@@ -49,6 +49,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+  gem "importmap-rails"
 end
 
 group :development do

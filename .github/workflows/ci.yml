@@ -26,9 +26,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install dependencies
-        run: bundle install
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -37,6 +34,9 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+        
+      - name: Install dependencies
+        run: bundle install
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bundle exec importmap audit
