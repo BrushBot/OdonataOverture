@@ -1,0 +1,11 @@
+<h1> <%= @userName %>, Add a Sighting</h1>
+<p>Enter the details of the sighting</p>
+<form action="/sightings" method="post">
+  <input type="text" name="species" placeholder="Species">
+  <input type="text" name="location" placeholder="Location">
+  <input type="text" name="date" placeholder="Date">
+  <button type="submit">Confirm</button>
+</form>
+
+<%= link_to "Add Success", add_success_path %>
+<%= link_to "Add Failed", add_failed_path %>

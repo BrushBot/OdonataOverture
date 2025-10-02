@@ -35,3 +35,14 @@
 
 # Ignore encrypted credentials file
 /config/credentials.yml.enc
+
+# Docker-related files
+docker.env
+.docker/
+docker-compose.override.yml
+
+# PostgreSQL data
+postgres_data/
+
+# Docker volumes and caches
+bundle_cache/

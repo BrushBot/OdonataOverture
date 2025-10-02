@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "sighting/add", to: "sighting#add", as: :add
+  get "sighting/add_success", to: "sighting#add_success", as: :add_success
+  get "sighting/add_failed", to: "sighting#add_failed", as: :add_failed
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
