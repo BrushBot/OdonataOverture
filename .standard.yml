@@ -1,0 +1,32 @@
+# Standard Ruby configuration for Rails 8.0.3
+ruby_version: 3.4
+fix: true
+parallel: true
+
+# Ignore common Rails directories that don't need linting
+ignore:
+  - 'db/schema.rb'
+  - 'db/migrate/*.rb'
+  - 'config/**/*.rb'
+  - 'bin/**/*'
+  - 'vendor/**/*'
+  - 'tmp/**/*'
+  - 'log/**/*'
+  - 'storage/**/*'
+  - 'public/**/*'
+  - 'node_modules/**/*'
+
+# Rails-specific rules
+rules:
+  Layout/LineLength:
+    Max: 120
+  Metrics/BlockLength:
+    Exclude:
+      - 'spec/**/*'
+      - 'test/**/*'
+  Style/Documentation:
+    Enabled: false
+  Style/FrozenStringLiteralComment:
+    Enabled: false
+
+
